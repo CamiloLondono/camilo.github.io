@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Historia Clase a Clase</title>
+  <!---Estilos--->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #0536bb; /* Color de fondo azul bonito */
+      color: #fff; /* Color de texto blanco */
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .day {
+      border-bottom: 1px solid #ccc;
+      padding: 20px 0;
+      display: none;
+      animation: fadeEffect 1s ease; /* Animación de desvanecimiento */
+    }
+    .day.active {
+      display: block;
+    }
+    .day h2 {
+      margin-top: 0;
+    }
+    .day p {
+      line-height: 1.6;
+    }
+    .day img {
+      max-width: 100%;
+      display: block;
+      margin: 10px auto;
+      border-radius: 5px; /* Bordes redondeados para las imágenes */
+    }
+    .day-buttons {
+      margin-bottom: 20px;
+    }
+    .day-buttons button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 5px;
+      cursor: pointer;
+      background-color: #3498db; /* Color de fondo del botón */
+      color: #fff; /* Color de texto del botón */
+      border: none;
+      border-radius: 5px; /* Bordes redondeados para los botones */
+      transition: background-color 0.3s ease; /* Transición suave del color de fondo */
+    }
+    .day-buttons button:hover {
+      background-color: #2980b9; /* Color de fondo del botón al pasar el mouse */
+    }
+    .back-button {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #3498db; /* Color de fondo del botón de regreso */
+      color: #fff; /* Color de texto del botón de regreso */
+      border: none;
+      border-radius: 5px; /* Bordes redondeados */
+      cursor: pointer;
+      transition: background-color 0.3s ease; /* Transición suave del color de fondo */
+    }
+    .back-button:hover {
+      background-color: #2980b9; /* Color de fondo del botón al pasar el mouse */
+    }
+    .day-button {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #3498db; /* Color de fondo del botón */
+      color: #fff; /* Color de texto del botón */
+      border: none;
+      border-radius: 5px; /* Bordes redondeados */
+      cursor: pointer;
+      transition: background-color 0.3s ease; /* Transición suave del color de fondo */
+    }
+    .day-button:hover {
+      background-color: #2980b9; /* Color de fondo del botón al pasar el mouse */
+    }
+    h1 {
+      text-align: center;
+      font-size: 36px;
+      margin: 20px 0;
+    }
+    /* Animación de desvanecimiento */
+    @keyframes fadeEffect {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .icon-container {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+    }
+    .icon-container img {
+      width: 120px; /* Tamaño del icono */
+      height: 120px;
+    }
+    .audio-player-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+
+    .play-button {
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .play-button svg {
+      width: 24px;
+      height: 24px;
+    }
+    .dark-mode-button {
+      position: fixed;
+      top: 20px;
+      right: 80px; /* Espacio entre el reproductor y el botón del modo oscuro */
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    .dark-mode {
+      background-color: #333;
+      color: #fff;
+    }
+
+    .image-container {
+    display: flex;
+    gap: 10px; /* Espacio entre las imágenes */
+    }
+
+    .image-container img {
+        max-width: 100%;
+        height: auto;
+    }
+
+  </style>
+</head>
+<!------------------------------ CUERPO DEL DOCUMENTO --------------------------->
+<body>
+  <!-- Icono en la esquina superior izquierda -->
+  <div class="icon-container">
+    <!-- Aquí puedes agregar tu icono -->
+    <img src="imagenes\univalle.png" alt="Icono">
+  </div>
+  <!-- Contenedor de reproductor de audio -->
+  <div class="audio-player-container">
+    <audio id="audioPlayer" src="musica\snk.mp3" loop></audio>
+    <button class="play-button" onclick="toggleAudio()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <path d="M3 22v-20l18 10-18 10z"/>
+      </svg>
+    </button>
+    <button class="dark-mode-button" onclick="toggleDarkMode()">Modo Oscuro</button>
+  </div>
+  <h1>Mi Bitácora</h1>
+  <div class="container">
+    <!-- Botones de clases-->
+    <div class="day-buttons">
+      <button class="day-button" onclick="showDay(0)">Presentación</button>
+      <button class="day-button" onclick="showDay(1)">Clase 1</button>
+      <button class="day-button" onclick="showDay(2)">Clase 2</button>
+      <button class="day-button" onclick="showDay(3)">Clase 3 y 4</button>
+      <button class="day-button" onclick="showDay(4)">Clase 5</button>
+      <button class="day-button" onclick="showDay(5)">Clase 6</button>
+      <button class="day-button" onclick="showDay(6)">Clase 7</button>
+      <button class="day-button" onclick="showDay(7)">Clase 8 y 9</button>
+      <button class="day-button" onclick="showDay(8)">Clase 10</button>
+      <button class="day-button" onclick="showDay(9)">Clase 11 y 12</button>
+      <button class="day-button" onclick="showDay(10)">Clase 13</button>
+      <button class="day-button" onclick="showDay(11)">Clase 14</button>
+      <button class="day-button" onclick="showDay(12)">Clase 15</button>
+      <button class="day-button" onclick="showDay(13)">Experiencias en Clase</button>
+      <!-- Agrega más botones según los días que tengas -->
+    </div>
+    <!--- Contenedor del día actual --->
+    <div class="day" id="day0">
+      <h2>Yo, Cristian Camilo Londoño Alvarez</h2>
+      <p>Yo soy Cristian, estudiante de TDSOFT, orgulloso de pertenecer a la Universidad del Valle y tener el privilegio de estar en este curso. Tengo 24 años.</p>
+      <h3>Metas:</h3>
+      <p>Me graduaré de ingeniero en la Universidad del Quindío y sacaré a mi familia adelante, ayudándoles a cumplir sus sueños. Además, podré compartir tiempo con la persona adecuada para mi vida.
+      </p>
+      <img src="imagenes\yoys.jpg" alt="Cristian Camilo">
+      <button class="back-button" onclick="goToMain()">Regresar al Menú</button>
+    </div>
+    <div class="day" id="day1">
+      <h2>Clase 1: Conocernos Interiormente</h2>
+      <h3>13 de Febrero del 2024</h3>
+      <p>Napoleón fue un líder francés y gran estratega que llevó a su gente a grandes cambios en su cultura. Me identifico con la grandeza que él tuvo. Aprendí a conocerme más a fondo, a entender lo que mis compañeros pensaban de mí y cómo me veían. Mi compañero Brayan me comparaba con un control de PlayStation debido a mi gran habilidad para jugar videojuegos, mientras que yo lo describí como un agujero negro por su gran fuerza y capacidad para lograr sus metas sin importar los obstáculos que se interpongan en su camino.
+      </p>
+      <img src="imagenes\napoleon.jpg" alt="Napoleón">
+      <h3>Brayan: El agujero negro</h3>
+      <img src="imagenes\agujero negro.jpg" alt="Agujero negro">
+      <button class="back-button" onclick="goToMain()">Regresar al Menú</button>
+    </div>
+    <div class="day" id="day2">
+      <h2>Clase 2: La Silueta</h2>
+      <h3>20 de Febrero del 2024</h3>
+      <p>Se desarrolló un test de 10 preguntas en el que nos puntuábamos para tener una idea aproximada de nuestras fortalezas y debilidades. Sin embargo, es importante destacar que no siempre cumplimos con las características que sugiere dicho test. Por ejemplo, tengo un buen autoconocimiento, poca empatía, comunicación asertiva normal con buenas relaciones interpersonales, tomo decisiones de manera normal y puedo resolver conflictos de manera adecuada. Además, tengo poco pensamiento creativo pero buen pensamiento crítico, manejo mis emociones y el estrés de manera efectiva.</p>
+      <img src="imagenes\test.jpg" alt="Test">
+      <p>Desarrollamos una silueta que nos representaría; en la mía, me gustaría pintarme con una capa al estilo de un superhéroe, inspirado por el gran liderazgo que me transmite Superman, mi película de superhéroes favorita. También consideré dibujarme como el personaje de 'Invencible', que es mi cómic de héroes preferido. Además de esto, diseñamos algunas preguntas para colocarlas en casa y decidir si plasmarlas en la silueta o en el cuaderno.</p>
+      <div class="image-container">
+        <img src="imagenes\bitacora silueta.jpg" alt="Silueta">
+        <img src="imagenes\silueta 2.jpg" alt="Silueta terminada">
+      </div>
+      <p>Aquí podemos ver la silueta acabada. La hice basada en un personaje de ficción llamado Invencible, que me gusta mucho. Él se puso el nombre de Invencible y, aunque a menudo está lastimado e incapaz de lograr las cosas, lo intenta todo el tiempo. Me gusta mucho dicho personaje y me inspiré en él porque me gustaría ser como él y lograr todo lo que se propone. Deberían ver la serie de Invencible para entenderme.</p>
+      <a href="preguntas.html" class="day-button" target="_blank">Ir a Preguntas</a>
+      <button class="back-button" onclick="goToMain()">Regresar al Menú</button>
+    </div>
+    <div class="day" id="day3">
+      <h2>Clase 3 y 4: Inteligencias Multiples</h2>
+      <h3>27 de Febrero  y 5 de Marzo del 2024</h3>
+      <p>Aprendimos sobre las inteligencias y descubrimos en qué ámbitos podríamos ser mejores. Yo noté que tengo la inteligencia lógico-matemática, pero no suelo destacar en matemáticas; sin embargo, en lógica sí. En programación destaco un poco más, pero en matemáticas nada que ver. Y la que sí noté que no tengo es la kinestésica-corporal, pues en las puntuaciones fue en la que peor calificación saqué.</p>
+      <p>Fue una gran clase porque descubrimos habilidades de los compañeros que no conocíamos y expusimos en parejas sobre las inteligencias múltiples. Notamos qué carreras son buenas para el tipo de inteligencia que tiene cada uno.</p>
+      <img src="imagenes\inteligencias multiples.jpg" alt="Clase 3 y 4">
+      <h3>Actividad Motricidad:</h3>
+      <p>Terminando la clase, hicimos una gran actividad bailando y notamos quiénes eran buenos bailando o tenían buena coordinación. También hubo una prueba de matemáticas en la que teníamos que hacer operaciones mientras nos movíamos hacia un lado. Hubo muchos que se equivocaron y fue una gran clase.</p>
+      <p>La enseñanza que nos dejó es que no todos destacamos en todo, pero tenemos habilidades que podemos explotar para lograr grandes logros o alcanzar cosas que no sabíamos que éramos capaces de lograr.</p>
+      <button class="back-button" onclick="goToMain()">Regresar al Menú</button>
+    </div>
+    <div class="day" id="day4">
+      <h2>Clase 5: Hemisferio Dominante y Actividad con Bombas</h2>
+      <h3>12 de Marzo del 2024</h3>
+      <p>Empezamos la clase con la actividad de hemisferios dominantes y sacamos una puntuación al final. Al ver las puntuaciones, obtuve un puntaje de 5, lo que indica que soy equilibrado, aunque siento que mi hemisferio derecho, el lógico, domina más.</p>
+      <p>Al terminar la actividad de determinar cuál hemisferio era dominante, realizamos una actividad con bombas en la que debíamos evitar que se cayeran. Era necesario tener comunicación con todos y tener destreza motriz para poder movernos con las bombas entre todos. Fue divertida, ya que no podíamos hablar y entonces solo eran sonidos extraños que hacíamos o gestos.</p>
+      <button class="back-button" onclick="goToMain()">Regresar al Menú</button>
+    </div>
+    <div class="day" id="day5">
+      <h2>Clase 6: Pelicula</h2>
+      <h3>19 de Marzo del 2024</h3>
+      <p>Llegamos al salón y realizamos un compartir entre todos los compañeros y con el profesor para ver una película. Vimos 'Intensamente', para aprender sobre nuestras emociones. Al finalizar la clase, compartimos nuestras experiencias sobre qué emoción nos identificamos.</p>
+      <img  src="imagenes\intensamente.jpg" alt="Intensamente">
+      <p>También la película nos sirvió para recordar nuestro pasado. Por ejemplo, al ver la película sentí mucha alegría. Uno recuerda momentos de la infancia o intenta discernir cuáles fueron los momentos importantes para la creación de las islas primordiales de cada uno de nosotros.</p>
+      <button class="back-button" onclick="goToMain()">Regresar al Menú</button>
+    </div>
+    <div class="day" id="day6">
+      <h2>Clase 7: Dibujos Sobre las emociones</h2>
+      <h3>2 de Abril del 2024</h3>
+      <p>En esta clase compartimos lo aprendido de la clase anterior, que fue la película. Empezamos a dibujar las 5 emociones que más predominan entre nosotros. A continuación, adjunto un dibujo de la emoción que más domina en mí.</p>
+      <img src="imagenes\dibujo emociones.jpg" alt="dibujo">
+      <p>La alegría es la emoción que más predomina en mí. Maneja mi estado de ánimo y me llena de gran felicidad en mi vida. Esta emoción mantiene mi vida en el camino adecuado y hace que sea la persona que soy. Muchos amigos me identifican como un amigo alegre y con muchas cualidades para brindar en mi amistad.</p>
+      <button class="back-button" onclick="goToMain()">Regresar al Menú</button>
+    </div>
+    <div class="day" id="day7">
+      <h2>Clases 8 y 9: Película "Vidas de papel"</h2>
+      <h3>16 de Abril del 2024</h3>
+      <p>En esta clase llegué un poquito tarde porque mi compañero Javier estaba con la moto pinchada, entonces fuimos a acompañarlo a despinchar la moto. Cuando se la despincharon, llegamos al salón y estaban viendo la película "Vidas de papel". Fue una película muy hermosa, que nos contaba la historia de alguien que al parecer pensaba que estaba cuidando a un niño cuando en realidad era como un trauma que él mismo se cuidaba, llegando al final a la muerte de él mismo. Una película muy linda que nos hace sentir muchas emociones. A mí me daba mucha alegría cuando lo veía contento con el niño porque me imaginaba a mí con mi hermanito haciendo cosas que lo hagan feliz a él. Muy buena película.</p>
+      <img src="imagenes/vidas de papel.jpg" alt="Vidas de papel">
+      <button class="back-button" onclick="goToMain()">Regresar al Menú</button>
+    </div>
+    <div class="day" id="day8">
+      <h2>Clase 10: Exposición sobre la Empatía</h2>
+      <h3>23 de Abril del 2024</h3>
+      <p>Empezamos la clase con una exposición sobre la empatía, donde nuestras compañeras hablaron de su importancia. Nos explicaron que la empatía nos sirve para comprender y entender a las demás personas. También nos dijeron que hay diferentes tipos de empatía (cognitiva, emocional, compasiva, situacional, global, reflexiva) y que se desarrolla desde que somos pequeños hasta la edad adulta.</p>
+      <p>Desarrollar una buena empatía nos permite mejorar las relaciones interpersonales, conectar con las demás personas y entender sus problemas o lo que están pasando. Fomenta la cooperación y el trabajo en equipo porque, en entornos laborales, la empatía facilita la cooperación y la solución de conflictos, ayudando a que los equipos se entiendan y se apoyen mutuamente. La empatía la usamos en la familia, el trabajo, la amistad y la comunidad.</p>
+      <img src="imagenes/empatia.jpg" alt="Empatia">
+      <p>Después hicimos una actividad de la exposición que fue un Kahoot sobre preguntas de la empatía. Perdí y ganó mi compañero Javier.</p>
+      <p>Luego hicimos una actividad con nuestro compañero sobre cómo me sentiría siendo mi compañero y qué me gustaría que me dijeran. Yo me emparejé con Brayan y dije que me siento fuerte, alegre, y dispuesto a todo. Me gustaría que me dijeran que voy a lograr todo, que voy a salir adelante y que voy a ser ingeniero.</p>
+      <p>Después recibimos una visita de una compañera del profesor que nos vino a hablar sobre la técnica del Pomodoro para fomentar la lectura en nosotros. Me di cuenta de que no me gusta leer, a pesar de que empezamos con lo más sencillo, que eran 25 minutos de lectura y 5 de descanso. Fue muy tedioso leer durante este tiempo, sentí que se hizo eterno. A mí me tocó una lectura sobre el amor, y por partes se veía buena y en otras no tanto, pero no fue suficiente. Tal vez debería practicar mucho más esta técnica, pero no me gusta leer.</p>
+      <img src="imagenes/pomodoro.jpg" alt="Pomodoro">
+      <button class="back-button" onclick="goToMain()">Regresar al Menú</button>
+    </div>
+    <div class="day" id="day9">
+      <h2>Clases 11 y 12: Comunicación Asertiva</h2>
+      <h3>7 de Mayo del 2024</h3>
+      <p>Empezamos la clase con una actividad sobre qué nos gustaría ser si fuéramos un objeto. Fue aleatorio y a mí me tocó ser el dinero. Dije que me gustaría estar al servicio de la gente para poder cumplir sus sueños.</p>
+      <p>Seguido de esto, el compañero Mario y el compañero Frank expusieron sobre la comunicación asertiva, hablándonos sobre por qué es bueno tener una comunicación asertiva y llevarla de manera adecuada. Nos explicaron que las características de una comunicación asertiva pueden ser: claridad y directez, respeto mutuo y confianza en uno mismo. Esas son algunas características de una comunicación asertiva. Después hicimos una actividad sobre armar una figura con un compañero; él tenía las piezas y yo la forma de la figura, pero no podíamos vernos directamente, así que teníamos que solucionarlo solo con comunicación. Nos dimos cuenta de que es muy difícil llevar una comunicación asertiva de manera adecuada.</p>
+      <img src="imagenes/comunicacion asertiva.jpg" alt="Comunicación">
+      <button class="back-button" onclick="goToMain()">Regresar al Menú</button>
+    </div>
+    <div class="day" id="day10">
+      <h2>Clase 13: Exposición sobre Autoestima</h2>
+      <h3>14 de Mayo del 2024</h3>
+      <p>Este día me tocó exponer a mí y a mi compañero sobre la autoestima y por qué es importante. Hablamos de acuerdo a las diapositivas, poniendo ejemplos en casi todos los puntos y llevando un buen control a la hora de exponer. Con aportes del profesor cada cierto tiempo, me pareció que fue una buena exposición por parte de nosotros.</p>
+      <p>Hablamos de que es bueno tener autoestima porque nos permite afrontar retos y proponernos metas que no sabíamos que podíamos lograr. En caso de fallar, no dejar que nos baje demasiado la autoestima es crucial. Es una gran habilidad que desarrollamos a lo largo de la vida y nos sirve mucho en nuestra vida como personas.</p>
+      <p>Seguido de esto, hicimos una actividad sobre la autoestima que consistía en hacer un dibujo, fuera bueno o malo, que nos sirviera para la autoestima y nos hiciera sentir de manera positiva o negativa. Algunos compañeros hicieron dibujos positivos y otros negativos.</p>
+      <img src="imagenes/autoestima.jpg" alt="Autoestima">
+      <p>Después, hicimos una actividad sobre vendernos, ofreciéndonos a nosotros mismos como si fuera nuestra hoja de vida. Fue una forma de dar información sobre nosotros, con el profesor dándonos ideas de cómo mejorar nuestro discurso y presentarnos de manera correcta. Fue una gran clase.</p>
+      <button class="back-button" onclick="goToMain()">Regresar al Menú</button>
+    </div>
+    <div class="day" id="day11">
+      <h2>Clase 14: Exposición sobre Inclusión, Diversidad e Igualdad de Género y Resolución de Conflictos</h2>
+      <h3>21 de Mayo del 2024</h3>
+      <p>Empezamos la clase con la exposición de las compañeras sobre la inclusión y aprendimos sobre los tipos de inclusión, que pueden ser social, ejecutiva, laboral y cultural. Aprendimos que cada individuo es valioso y único, aunque la palabra "individuo" suena fea para referirnos a las personas. Debemos tener características como variedad, inclusión, equidad, respeto, diálogo, comprensión y adaptabilidad.</p>
+      <p>Debemos aprender a querer y aceptar a todas las personas sin importar cómo sean y valorarlas tal cual son, sin discriminarlas.</p>
+      <p>Hicieron una actividad en Kahoot, la cual gané. Puse mucha atención y la gané, y me gané una chocolatina.</p>
+      <img src="imagenes/diversidad.png" alt="Diversidad">
+      <p>La siguiente exposición fue sobre la Resolución de Problemas. Nos hablaron de cómo lograr solucionarlos y por qué suceden. Pueden ser causados por falta de recursos, falta de comunicación, factores humanos y factores externos. Además, nos explicaron cómo atacar dichos problemas con soluciones para llegar a la meta que queramos.</p>
+      <p>La actividad fue una lluvia de ideas sobre cómo solucionar un problema planteado por los compañeros. Discutimos ideas y escogimos las mejores para afrontar el problema. Llegamos a una combinación de ideas para lograr tener la solución adecuada.</p>
+      <img src="imagenes/resolucion-de-conflictos.jpg" alt="Conflictos">
+      <button class="back-button" onclick="goToMain()">Regresar al Menú</button>
+    </div>
+    <div class="day" id="day12">
+      <h2>Clase 15: Universidad Libre de Humo</h2>
+      <h3>31 de Mayo del 2024</h3>
+      <p>Esta semana no tuvimos clases, pero preparamos la actividad de la Universidad Libre de Humo. Nos reunimos en Sevilla nosotros los estudiantes para tomar ideas y empezar a hacer la actividad.</p>
+      <img src="imagenes/empezando.jpg" alt="Empezando">
+      <p>Pensamos que hacer una cartelera sobre una cajetilla de cigarrillos sería una buena idea y que la gente se pudiera tomar una foto. Hicimos ajustes a ella; al principio, la foto que la gente se iba a tomar debía ir arriba, pero terminamos haciendo un hueco en la cartelera para que la gente se tomara dicha foto ahí.</p>
+      <img src="imagenes/terminado.jpg" alt="Terminado">
+      <p>Llegó el momento de ir a la universidad y acomodar todo. Nos reunimos y subimos la cartelera en un tubo. A todo el que pasaba le ofrecíamos tomar una foto. Podemos ver al compañero Sebastián tomarse la foto ahí y otros compañeros también lo hicieron, pero las fotos las tiene el profesor.</p>
+      <img src="imagenes/presentando.jpg" alt="Foto">
+      <p>Las chicas hicieron una gran actividad y un gran trabajo. Notamos cómo nos integramos, ya que en el salón somos de dos carreras distintas. A pesar de las diferencias, convivimos entre todos durante la actividad y se sintió como un salón unido ❤️</p>
+      <img src="imagenes/grupo.jpg" alt="Grupo">
+      
+      <button class="back-button" onclick="goToMain()">Regresar al Menú</button>
+    </div>
+    <div class="day" id="day13">
+      <h2>Experiencias de mis compañeros en clases</h2>
+      <h3>Brayan</h3>
+      <img src="imagenes\brayan.jpg" alt="Brayan">
+      <p></p>
+      <h3>Javier</h3>
+      <img src="imagenes\javier.png" alt="Javier">
+      <p></p>
+      <h3>Manuel</h3>
+      <img src="imagenes\bingbong.jpg" alt="Manuel">
+      <h3>Mario</h3>
+      <video controls>
+        <source src="imagenes/mario.mp4" type="video/mp4">
+      </video>
+      <p></p>
+      <h3>Sebastian</h3>
+      <img src="imagenes\sebas.jpg" alt="Sebas">
+      <p></p>
+      <button class="back-button" onclick="goToMain()">Regresar al Menú</button>
+    </div>
+    <!-- Puedes añadir más días según necesites -->
+  </div>
+  <!------------------------------ Footer ------------------------------>
+  <footer>
+    <div class="container">
+      <div class="footer-info">
+        <p>&copy; 2024 Mi Página Web | Todos los derechos reservados</p>
+      </div>
+    </div>
+  </footer>
+  <!-- Funciones JavaScript para el funcionamiento del sitio web -->
+  <script>
+    function showDay(dayNumber) {
+      // Oculta todos los días
+      var days = document.querySelectorAll('.day');
+      days.forEach(function(day) {
+        day.classList.remove('active');
+      });
+  
+      // Muestra el día seleccionado
+      var selectedDay = document.getElementById('day' + dayNumber);
+      selectedDay.classList.add('active');
+    }
+    
+    var audioPlayer = document.getElementById("audioPlayer");
+    var playButton = document.querySelector(".play-button");
+
+    function toggleAudio() {
+      if (audioPlayer.paused) {
+        audioPlayer.play();
+        playButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M14 12l-10-6v12l10-6zm6-6h-12v12h12v-12z"/></svg>';
+      } else {
+        audioPlayer.pause();
+        playButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3 22v-20l18 10-18 10z"/></svg>';
+      }
+    }
+    function goToMain() {
+      var days = document.querySelectorAll('.day.active');
+      
+      days.forEach(function(day) {
+        day.style.transition = 'opacity 0.5s ease'; // Añadir transición
+        day.style.opacity = 0; // Desvanecer el día activo
+        
+        // Al finalizar la animación, remover la clase "active"
+        setTimeout(function() {
+          day.classList.remove('active');
+          day.style.opacity = 1; // Restaurar opacidad por si se muestra de nuevo
+        }, 500); // 500 milisegundos = 0.5 segundos
+      });
+    }
+    function toggleDarkMode() {
+      var body = document.body;
+      body.classList.toggle('dark-mode');
+    }
+  </script>
+</body>
+</html>
