@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preguntas Silueta</title>
+  <!---Estilos--->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #0536bb; /* Color de fondo azul bonito */
+      color: #fff; /* Color de texto blanco */
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .day {
+      border-bottom: 1px solid #ccc;
+      padding: 20px 0;
+      display: none;
+      animation: fadeEffect 1s ease; /* Animación de desvanecimiento */
+    }
+    .day.active {
+      display: block;
+    }
+    .day h2 {
+      margin-top: 0;
+    }
+    .day p {
+      line-height: 1.6;
+    }
+    .day img {
+      max-width: 100%;
+      display: block;
+      margin: 10px auto;
+      border-radius: 5px; /* Bordes redondeados para las imágenes */
+    }
+    .day-buttons {
+      margin-bottom: 20px;
+    }
+    .day-buttons button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 5px;
+      cursor: pointer;
+      background-color: #3498db; /* Color de fondo del botón */
+      color: #fff; /* Color de texto del botón */
+      border: none;
+      border-radius: 5px; /* Bordes redondeados para los botones */
+      transition: background-color 0.3s ease; /* Transición suave del color de fondo */
+    }
+    .day-buttons button:hover {
+      background-color: #2980b9; /* Color de fondo del botón al pasar el mouse */
+    }
+    .back-button {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #3498db; /* Color de fondo del botón de regreso */
+      color: #fff; /* Color de texto del botón de regreso */
+      border: none;
+      border-radius: 5px; /* Bordes redondeados */
+      cursor: pointer;
+      transition: background-color 0.3s ease; /* Transición suave del color de fondo */
+    }
+    .back-button:hover {
+      background-color: #2980b9; /* Color de fondo del botón al pasar el mouse */
+    }
+    .day-button {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #3498db; /* Color de fondo del botón */
+      color: #fff; /* Color de texto del botón */
+      border: none;
+      border-radius: 5px; /* Bordes redondeados */
+      cursor: pointer;
+      transition: background-color 0.3s ease; /* Transición suave del color de fondo */
+    }
+    .day-button:hover {
+      background-color: #2980b9; /* Color de fondo del botón al pasar el mouse */
+    }
+    h1 {
+      text-align: center;
+      font-size: 36px;
+      margin: 20px 0;
+    }
+    /* Animación de desvanecimiento */
+    @keyframes fadeEffect {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .icon-container {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+    }
+    .icon-container img {
+      width: 120px; /* Tamaño del icono */
+      height: 120px;
+    }
+    .audio-player-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+
+    .play-button {
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .play-button svg {
+      width: 24px;
+      height: 24px;
+    }
+    .dark-mode-button {
+      position: fixed;
+      top: 20px;
+      right: 80px; /* Espacio entre el reproductor y el botón del modo oscuro */
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    .dark-mode {
+      background-color: #333;
+      color: #fff;
+    }
+  </style>
+</head>
+<!------------------------------ CUERPO DEL DOCUMENTO --------------------------->
+<body>
+  <!-- Icono en la esquina superior izquierda -->
+  <div class="icon-container">
+    <!-- Aquí puedes agregar tu icono -->
+    <img src="imagenes\univalle.png" alt="Icono">
+  </div>
+  <!-- Contenedor de reproductor de audio -->
+  <div class="audio-player-container">
+    <audio id="audioPlayer" src="musica\Luna.mp3" loop></audio>
+    <button class="play-button" onclick="toggleAudio()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <path d="M3 22v-20l18 10-18 10z"/>
+      </svg>
+    </button>
+    <button class="dark-mode-button" onclick="toggleDarkMode()">Modo Oscuro</button>
+  </div>
+  <h1>Preguntas de Autoconocimiento</h1>
+  <div class="container">
+    <!-- Botones de clases-->
+    <div class="day-buttons">
+      <button class="day-button" onclick="showDay(0)">Introduccion</button>
+      <button class="day-button" onclick="showDay(1)">Nombre</button>
+      <button class="day-button" onclick="showDay(2)">Preguntas A</button>
+      <button class="day-button" onclick="showDay(3)">Preguntas B</button>
+      <button class="day-button" onclick="showDay(4)">Preguntas C</button>     
+      <button class="day-button" onclick="showDay(5)">Preguntas D</button>
+      <button class="day-button" onclick="showDay(6)">Preguntas E</button>
+      <button class="day-button" onclick="showDay(7)">Preguntas F</button>
+      <button class="day-button" onclick="showDay(8)">Preguntas G</button>
+      <button class="day-button" onclick="showDay(9)">Preguntas H</button>
+      <button class="day-button" onclick="showDay(10)">Otras Preguntas</button>
+    </div>
+    <div class="day" id="day0">
+        <h2>Autoconocimiento</h2>
+        <p>Es ir en busca de valorar el propio potencial, reconocer los recursos internos y asumir comportamientos de autoresponsabilidad en el propio desarrollo integral. Iniciar un proceso de transformación personal que permita lograr una mayor comprensión de quién se es, una mayor comprensión del ambiente en donde se interactúa, qué se busca y para qué, y una mayor comprensión de aquello que le da sentido a la vida.</p>
+        <p>A continuación, se mostrarán solo las respuestas a las preguntas en su respectiva ventana. Serán respondidas en el orden del PDF suministrado por el profesor.</p>
+        <button class="back-button" onclick="goToMain()">Regresar al Menú</button>
+    </div>
+    <div class="day" id="day1">
+      <h2>Nombre:</h2>
+      <p>Cris, Cristian, Camilo, Cami (Gago), me dicen así desde primaria. 'Niño' (Apellido de la profesora de la Normal que me enseñó matemáticas y supo que me gustaban), Henry (El nombre de mi tío favorito, con quien me encantaba compartir y que falleció cuando yo tenía 13 años). Apodos me sobran: Gago, Jorsh, Jorgie, Alpinito, Frito, Tatareto, Pulin. Ortiz (apellido de mi primer novia, con quien aún sigo hablando), Arenas (El apellido de mi mejor amiga y del hermano que fue asesinado un 22 de noviembre), Juan David Parra (primo con quien compartí gran parte de mi infancia, me vio crecer y me guió demasiado), Diana (mi hermana mayor, quien me enseñó qué cosas son buenas y malas, y me guía aún en la vida), Martín y Marina (mis padres, aunque no vivo con ellos, comparto tiempo con ellos y son los seres que me trajeron a este mundo), Santiago Londoño (la persona a quien más amo en la vida, mi hermanito) ❤️.</p>
+      <img src="imagenes\familia.jpg" alt="familia">
+      <button class="back-button" onclick="goToMain()">Regresar al Menú</button>
+    </div>
+    <div class="day" id="day2">
+      <h3 style="color: yellow;">Cómo le gusta que le llamen y le disgusta.</h3>
+      <p>Me gusta que me llamen Cristian o Camilo, también combinados los nombres Cristian Camilo o por el apodo que he tenido siempre, GAGO, ya me acostumbré a escucharlo. Lo que más me disgustaba de todos era Tatareto, odiaba que me llamaran así.</p>
+
+      <h3 style="color: yellow;">Lo más satisfactorio, lo que más le proporciona alegría en este momento y lo insatisfactorio de su experiencia en este momento.</h3>
+      <p>Jugar juegos o jugar fútbol, eso es lo más satisfactorio que puedo sentir en estos momentos. Lo insatisfactorio es perder en juegos o que las cosas no se den como uno quiere que se den.</p>
+
+      <h3 style="color: yellow;">Lo que más acepta y no acepta de su cuerpo.</h3>
+      <p>Mi sonrisa y alegría es lo que más acepto de mi cuerpo. Lo que no acepto son mis pies, me disgustan mis pies. En cuanto a actitud, la ira es lo que no acepto.</p>
+
+      <h3 style="color: yellow;">Lo que considera más grande y pequeño de sí mismo.</h3>
+      <p>Mi amistad es lo que considero más grande. Lo más pequeño sería mi empatía.</p>
+
+      <h3 style="color: yellow;">Lo que más le duele o molesta, y lo que lo alegra, lo satisface.</h3>
+      <p>Perder en cualquier ámbito es lo que más me duele o molesta. Lo que más me alegra es ganar y jugar videojuegos.</p>
+
+      <h3 style="color: yellow">Lo más capaz y lo incapaz de usted.</h3>
+      <p>Lo más capaz es tener una gran paciencia para las personas y poder brindar conocimiento a las demas personas, lo incapaz es un poco de empatia hacia los demás para entender un poco el sufrimiento de ellos o las situaciones que les suceden</p>
+
+      <h3 style="color: yellow;">La fortaleza y la inhabilidad, que considere de si.</h3>
+      <p>Mi resiliencia es una de mis fortalezas porque me permite reponerme ante la adversidad y salir adelante sin importar las dificultades manteniendo la alegria en mi. Aunque valoro y entiendo la importancia de la empatía en las interacciones humanas, a veces puedo tener dificultades para conectarme emocionalmente con las experiencias de los demás de manera inmediata. Esta falta de empatía puede manifestarse en situaciones donde se espera una respuesta emocional inmediata o en la capacidad para ponerme en el lugar de los demás de manera inmediata. Sin embargo, estoy consciente de este aspecto y estoy trabajando activamente para mejorar mi habilidad de empatizar más rápidamente y de manera más efectiva.</p>
+
+      <h3 style="color: yellow;">Cuál es el sentimiento que más permanece en usted.</h3>
+      <p>Felicidad, es el sentimiento que más predomina en mi, el que mantiene conmigo y me acompaña de buena manera para afrontar todas las dificultades.</p>
+
+      <h3 style="color: yellow;">Lo que más tiene presente de sí mismo y lo que ha olvidado</h3>
+      <p>Logros significativos, como ganar el torneo de CTR de la universidad, ganar casi todas los torneos que jugue en mi play contra mis amigos, experiencias como cuando conocí el mar, cuando fui al estadio a ver al America de cali, mis metas las tengo presentes todo el tiempo, graduarme de la ingenieria y salir adelante. Lo que olvido son detalles minimos del pasado, fechas importantes para personas tambien las suelo olvidar, logros pequeños o momentos compartidos con amigos que en su momento fueron de mucha felicidad que ahora no recuerdo.</p>
+
+      <h3 style="color: yellow;">Lo que más usa y lo que no usa de su cuerpo</h3>
+      <p>Hablando físicamente, el cerebro para planear mi día, para pensar qué cosas hacer a lo largo del día y mis pies, los que me llevan a todo lugar que yo me proponga. Lo que menos uso de mi cuerpo es mi brazo izquierdo o pierna derecha a la hora de ejercer tareas; soy demasiado diestro. En lo emocional, lo que más uso es mi amistad con las personas cercanas y el apoyo que les doy, y lo que menos uso es la empatía con personas diferentes a mi círculo social.</p>
+
+      <h3 style="color: yellow;">Lo que más cuida y no cuida de su cuerpo</h3>
+      <p>Lo que más cuido es mi rostro, desde los dientes hasta cómo estoy motilado o afeitado. Intento adelgazar todos los años o mejorar un poco el físico del cuello para abajo, aunque tampoco me siento tan mal. Lo que no cuido es más mi salud; como demasiados dulces y no debería comerlos por la diabetes, y casi no me hago chequeos.</p>
+
+      <h3 style="color: yellow;">Lo que más siente y menos siente de sí mismo, en lo físico, lo emocional, lo espiritual.</h3>
+      <p>Lo que más siento en mí es la felicidad. Siento cuando la felicidad está presente porque tengo paz, no tengo preocupaciones y soy capaz de todo. Lo que menos siento es rabia o ira; las controlo muy bien y casi no están presentes en mi vida. En lo físico, lo que más siento son mis pies; siento que andando descalzo percibo lo que hay alrededor mío. Lo que no siento no sabría decir. En lo espiritual, lo que no siento es a Dios; él no existe para mí. Puede que haya un bien o un mal, pero para mí no existe un Dios.</p>
+
+      <h3 style="color: yellow;">Que parte de si escucha más y no escucha</h3>
+      <p>Escucho mucho mis emociones, trato de entender cómo afectan mi estado de ánimo y mi felicidad para poder ser feliz. Lo que no escucho pueden ser autocríticas, porque siento que podría tratarme muy mal y no debería ser así, entonces no me enfoco en ello y trato de no autocriticarme mucho.</p>
+
+      <h3 style="color: yellow;">En que más piensa de si y no piensa hasta hoy</h3>
+      <p>En lo que más pienso es en las metas que me propongo, en cómo lograrlas y cómo afrontar los desafíos para llegar a ellas. En caso de fracasar, no dejo que la frustración me domine y me enfoco en lo positivo. No suelo pensar mucho en mi bienestar mental; nunca he ido a una cita con un psicólogo, y dicen que es bueno para despejar la mente o enfocarse. Entonces, por lo general, cuido mi bienestar mental con mis propios pensamientos, que a veces no son los correctos.</p>
+
+      <h3 style="color: yellow;">La parte enferma y la sana</h3>
+      <p>La parte sana es mi bienestar físico, que podría ser en cómo cuidarme. Intento hacer ejercicio regularmente para poder mantener un buen físico y no comer demasiadas cosas malas para la salud, para no engordar ni enfermarme. La parte enferma serían los hábitos poco saludables: no me gusta madrugar, detesto madrugar, soy muy perezoso. En vez de estudiar para un parcial o solucionar un problema de algún proyecto, prefiero ponerme a jugar en lugar de enfocarme en lo necesario.</p>
+
+      <h3 style="color: yellow;">La parte que toca y la que no toca</h3>
+      <p>Lo que más toco son mis manos, con las que interactúo constantemente y uso todo el día sin darme cuenta. La parte que menos toco es mi espalda. Aunque siempre está conmigo, no suelo prestarle mucha atención ni tocarla para saber cómo se encuentra.</p>
+  
+      <h3 style="color: yellow;">La parte que mira y no ha mirado en un tiempo determinado</h3>
+      <p>La parte que uso para mirar todo el día son mis ojos. Los uso todo el tiempo para ver con quién interactúo y las cosas que me rodean. También podría ser mi sonrisa, ya que a menudo la miro cuando tengo la oportunidad, en el baño o en el celular, para ver cómo está. La parte que no miro son mis pies, y tampoco me gusta que me los miren. Siempre ando con zapatos cerrados para no verlos tanto ni que otros los vean.</p>
+      
+      <h3 style="color: yellow;">Lo tenso y lo relajado</h3>
+      <p>Lo tenso en estos momentos puede ser mi cuello, ya que mantengo la cabeza derecha al estar todo el tiempo en la PC haciendo los trabajos de la universidad y estudiando. Esto lo hace sentir demasiado tenso. Lo relajado podría ser mis piernas, que después de hacer ejercicio, un buen estiramiento o un baño me relaja las piernas y todo el cuerpo para afrontar todo lo que viene.</p>
+      
+      <h3 style="color: yellow;">Pensamientos positivos y pensamientos negativos que más me impactan</h3>
+      <p>Los pensamientos positivos son mis recuerdos de logros y mis capacidades. Pienso en ello y miro lo que he conseguido hasta hoy, y lo lejos que he llegado. Por ejemplo, en la carrera, no me imaginaba llegar tan lejos y saber que ya casi me gradúo y puedo tener un gran futuro como desarrollador. Son los pensamientos que más me impulsan a seguir adelante. 
+      
+      Por otro lado, los pensamientos negativos pueden ser aquellos que llegan a mi mente y me hacen dudar de mí mismo. Puedo llegar a sentirme ansioso al no cumplir ciertas expectativas de alguien o algún proyecto, y esos pensamientos son negativos y me afectan en el uso de mis habilidades.</p>
+      
+      <h3 style="color: yellow;">Lo que ama y lo que odia de sí mismo</h3>
+      <p>Lo que amo es mi sonrisa y mi capacidad de afrontar los problemas y ver de lo que soy capaz. Cuando logro algo que parecía lejano o poco probable, eso es algo que amo de mí.
+      
+      Por otro lado, odio mi conformismo. Sé que puedo lograr grandes cosas o aspirar a grandes metas, pero al entrar en una zona de confort que me resulta cómoda, ya no me motiva a seguir adelante. Eso lo odio, porque podría ser mejor en muchos ámbitos, pero mi conformismo no me deja.</p>
+      
+      <h3 style="color: yellow;">Lo que hace y nunca hace con su cuerpo</h3>
+      <p>Lo que hago es hacer ejercicio. Me gusta mucho el fútbol y estar rodeado de mis amigos para vivir grandes momentos y pasar momentos únicos y significativos con ellos y con mi familia.
+
+      Lo que no hago con mi cuerpo es consumir sustancias peligrosas o adictivas. No me gusta el alcohol, no fumo, no tengo ningún vicio, y evito todo esto para mantener mi cuerpo lo más sano posible.</p>
+
+      <h3 style="color: yellow;">Su debilidad y fortaleza</h3>
+      <p>Mi debilidad es mi conformismo, que no me permite explotar todo mi potencial como programador o como persona y lograr grandes cosas.
+      
+      Mi fortaleza es la capacidad de lograr las cosas que me propongo. Si logro sobreponerme al conformismo, puedo decir que mi fortaleza es muy poderosa. Cuando logro vencer mi debilidad, consigo grandes cosas y exploto todo mi potencial.</p>
+      
+      <h3 style="color: yellow;">Lo masculino y femenino</h3>
+      <p>Lo masculino puede ser mi interés por los deportes como el fútbol, rugby, natación, entre otros, y también por los videojuegos que están más asociados a lo masculino.
+
+      Lo femenino puede reflejarse en mi cuidado personal, en cómo me gusta verme y que me vean, y en sentirme bien conmigo mismo. También puede verse en mi sensibilidad emocional, ya que cuando veo películas sensibles, siento demasiado pesar.</p>
+
+      <h3 style="color: yellow;">Cuáles son las promesas que más se hace y cumple e incumple</h3>
+      <p>Las promesas que me hago incluyen hacer ejercicio, ir al gimnasio, madrugar para trotar, comer de manera saludable, ahorrar, entre muchas otras. A veces logro cumplirlas parcialmente; por ejemplo, actualmente estoy comiendo de manera saludable y voy al gimnasio de manera constante durante un mes, pero luego dejo de ir. Sin embargo, me resulta difícil cumplir con la promesa de ahorrar, por lo que a menudo delego esa responsabilidad a otra persona.</p>
+      
+
+
+
+    </div>
+    <div class="day" id="day3">
+      <h3 style="color: yellow;">¿Me conozco? ¿Soy un ser hábil al crear mi forma de vivir?</h3>
+      <p>Sí, me conozco y sé de mis capacidades y lo que puedo lograr. En cuanto a ser hábil al crear mi forma de vivir, aunque no entiendo completamente a qué se refiere, interpreto que se trata de si soy capaz de vivir de manera efectiva y significativa. Sí, considero que soy apto para vivir, para transmitir conocimientos y brindar algo valioso a las personas que están en mi vida.</p>
+      
+      <h3 style="color: yellow;">¿Quién soy?, ¿Soy o no soy…? ¿Para qué soy y hago?</h3>
+      <p>Soy un ser humano, capaz de lograr lo que me propongo y estoy hecho para grandes cosas. Mi objetivo es sacar a mi familia adelante y sentirme orgulloso de mí mismo, dejando un legado para las futuras generaciones. Quiero contribuir a hacer del planeta un mundo mejor.</p>
+      
+      <h3 style="color: yellow;">¿Qué siento, qué pienso, cómo actúo?</h3>
+      <p>Siento que puedo con todo y que puedo lograr todo lo que me proponga. Pienso que, si necesito demostrar de lo que soy capaz o sobresalir, lo haré. Actúo de diferentes maneras dependiendo del lugar o el contexto.</p>
+   
+      <h3 style="color: yellow;">¿Qué siento y pienso que está ocurriendo dentro del mundo de los otros?</h3>
+      <p>No pienso mucho en el mundo de los demás; me enfoco en mi propio mundo. Cuando veo que los mundos de otras personas son extraños o diferentes, intento asociarlos al mío y pienso en cómo lo solucionaría yo. Sin embargo, sé que ellos no lo harían de la misma manera, así que omito eso. Cada uno tiene su propio mundo.</p>
+
+      <h3 style="color: yellow;">¿Qué es lo que yo observo en el mundo que me rodea? ¿Qué percibo, en los otros?</h3>
+      <p>Percibo odio, envidia, y pobreza. Hay diferentes formas de solucionar los problemas, pero nadie hace nada o muchas veces se hacen oídos sordos y no afrontan dichos problemas. También percibo compasión, que interpreto como debilidad, ya que muchas veces se ayuda a los débiles sin investigar si realmente lo son.</p>
+      
+      <h3 style="color: yellow;">Dificultades y limitaciones en su proceso de comunicación.</h3>
+      <p>No soy muy comunicativo con personas nuevas y, a menudo, no sé cómo expresarme. No suelo medir mis palabras y hablo de manera directa, lo que a veces afecta a la gente y no les gusta. Por lo tanto, podría mejorar mi proceso de comunicación.</p>
+      
+      <h3 style="color: yellow;">Tome conciencia de: tono de su voz, palabras que emplea, velocidad al hablar, inflexiones de voz (que dice y cómo lo dice). Escúchese.</h3>
+      <p>Mi voz es fuerte, hablo alto y uso palabras muy colombianas, de nuestra jerga. Hablo de manera rápida y suelo enredarme a veces, por eso mismo tengo el apodo que tengo.</p>
+
+      <h3 style="color: yellow;"></h3>
+
+
+
+
+    </div>
+    <div class="day" id="day4">
+      <h3 style="color: yellow;">¿Cómo me miro a mí mismo, me siento conmigo, pienso de mí?</h3>
+      <p>Me miro de una manera superior, me gusta sentirme mejor que las demás personas. Pienso que soy lo mejor y que nadie puede contra mí.</p>
+
+      <h3 style="color: yellow;">¿Qué otra cosa me hubiera gustado ser en la vida?</h3>
+      <p>Me hubiera gustado no haber nacido en América Latina. Nacer en EE.UU o en Europa habría hecho mi vida un poco mejor.</p>
+      
+      <h3 style="color: yellow;">¿Me acepto, me rechazo, me conformo?</h3>
+      <p>Me acepto en gran medida y me conformo con todo lo que tengo y objengo de mi vida</p>
+    
+      <h3 style="color: yellow;">¿Me comprendo? ¿Me amo?</h3>
+      <p>Me entiendo en todo lo que hago y me amo. Me amo tanto que a veces lastimo a las demás personas que me rodean al no brindarles el amor que esperan de mí, porque todo lo enfoco en mí y en mi autoestima.</p>
+   
+      <h3 style="color: yellow;">¿Te comprendo, acepto, rechazo, me resigno?</h3>
+      <p>No comprendo a las demás personas, no me gusta aceptarlas y las rechazo todo el tiempo porque no pensamos igual y no tenemos los mismos ideales. Por lo tanto, evito ver todo esto con las demás personas.</p>
+
+      <h3 style="color: yellow;">¿Cuál es la visión que tengo del otro, de los otros?</h3>
+      <p>Veo debilidad en las demás personas; las percibo como individuos con habilidades que podrían suplir o buscar cómo solucionar sus problemas, pero muchas veces no son capaces o no son aptos para tomar decisiones correctas que podrían afectar a otros pero no a ellos mismos. Esto los hace parecer débiles.</p>
+  
+    </div>
+    <div class="day" id="day5">
+      <h3 style="color: yellow;">¿He tomado consciencia de que lo que hago influye en lo que siento, y lo que hago y lo Que siento influye en lo que pienso?</h3>
+      <p>Sí, he tomado consciencia de que lo que hago influye en lo que siento. Por ejemplo, cuando realizo actividades que disfruto, como pasar tiempo con amigos o hacer ejercicio, tiendo a sentirme feliz y satisfecho. Del mismo modo, lo que siento puede influir en lo que pienso. Por ejemplo, si estoy experimentando emociones positivas, es más probable que tenga pensamientos optimistas y constructivos. En resumen, existe una relación bidireccional entre mis acciones, emociones y pensamientos, y soy consciente de cómo interactúan entre sí.</p>
+
+      <h3 style="color: yellow;">¿Me he dado cuenta de que esta interrelación en diferente orden, es un proceso continuo de retroalimentación, que hace que me relacione conmigo y con los otros de Una forma u otra?</h3>
+      <p>Sí, me he dado cuenta de que esta interrelación puede darse en diferentes órdenes y es un proceso continuo de retroalimentación. Esto significa que mis acciones, emociones y pensamientos están constantemente interactuando entre sí de manera dinámica. Por ejemplo, mis acciones pueden influir en mis emociones, que a su vez afectan mis pensamientos, y viceversa. Esta constante retroalimentación moldea mi percepción de mí mismo y de los demás, así como mi forma de relacionarme con ellos. Es un ciclo en el que estoy constantemente inmerso y que influye en mi experiencia y en mis interacciones diarias.</p>
+
+      <h3 style="color: yellow;">¿Genero climas de armonía o desarmonía en mis interacciones?</h3>
+      <p>Suelo generar climas de armonía en mis interacciones. Prefiero mantener un ambiente positivo y respetuoso, donde las personas se sientan cómodas y valoradas. Sin embargo, también reconozco que en algunas ocasiones puedo generar desarmonía, especialmente cuando mis emociones están alteradas o cuando hay diferencias de opinión que no logramos resolver de manera adecuada. En general, mi objetivo es cultivar relaciones armoniosas y constructivas con los demás.</p>
+
+      <h3 style="color: yellow;">Me centro en mis pensamientos: ¿que pienso, como pienso, que hago con lo que pienso, que calidad de pensamientos género (positivos, negativo)?</h3>
+      <p>Cuando me centro en mis pensamientos, suelo reflexionar sobre diversos temas y situaciones.Con lo que pienso, a menudo tomo decisiones y planifico mis acciones futuras.
+
+      En cuanto a la calidad de mis pensamientos, trato de mantener una actitud positiva y constructiva en la medida de lo posible.Sin embargo, también reconozco que a veces puedo tener pensamientos negativos, especialmente cuando enfrento desafíos o situaciones estresantes. En esos momentos, trato de identificar y cuestionar esos pensamientos negativos para cambiarlos por otros más positivos y realistas. En resumen, mi objetivo es cultivar una mentalidad optimista y proactiva para enfrentar los desafíos de la vida.</p>
+
+    </div>
+    <div class="day" id="day6">
+      <h3 style="color: yellow;">¿Poseo la capacidad para juzgar una situación adecuadamente, no solo en función de mis estructuras mentales? ¿reconozco mis estructuras mentales?</h3>
+      <p>Sí, poseo la capacidad para juzgar una situación adecuadamente, no solo en función de mis propias estructuras mentales. Reconozco que mis experiencias, creencias y valores pueden influir en cómo percibo y analizo una situación, pero también soy consciente de la importancia de considerar diferentes puntos de vista y tener en cuenta las perspectivas de los demás. Esto me ayuda a tomar decisiones más equilibradas y a entender mejor el contexto en el que me encuentro.</p>
+
+      <h3 style="color: yellow;">¿Soy capaz de analizar con objetividad experiencias e información y ser capaz de llegar a conclusiones propias sobre la realidad?</h3>
+      <p>Sí, tengo la capacidad de analizar con objetividad experiencias e información y llegar a conclusiones propias sobre la realidad. Procuro evaluar la información de manera imparcial, considerando diferentes perspectivas y evidencias disponibles. Utilizo el pensamiento crítico para discernir entre lo que es válido y lo que no lo es, y así formar mi propio juicio sobre las situaciones.
+
+      Aunque puedo ser influenciado por mis propias experiencias y creencias, me esfuerzo por mantener una mente abierta y estar dispuesto a cambiar de opinión si surgen nuevos datos o puntos de vista. Esto me permite ser más independiente en mis conclusiones y tener una comprensión más completa de la realidad.</p>
+
+      <h3 style="color: yellow;">¿Hago preguntas a los momentos, las circunstancias, los hechos, investigo y acepto o no las cosas en forma crédula?</h3>
+      <p>Sí, tiendo a hacer preguntas sobre los momentos, las circunstancias y los hechos para comprender mejor mi entorno y las situaciones que enfrento. Me gusta investigar y obtener más información antes de sacar conclusiones o tomar decisiones. Sin embargo, no acepto las cosas de manera crédula; en cambio, prefiero cuestionar y analizar la información antes de llegar a una conclusión.
+
+      Aunque puedo ser abierto a nuevas ideas, no acepto algo sin cuestionarlo y verificar su veracidad. Busco evidencia y argumentos sólidos antes de aceptar una afirmación como cierta. Esto me ayuda a mantener un enfoque crítico y a tomar decisiones fundamentadas en información confiable.</p>
+
+
+    </div>
+    <div class="day" id="day7">
+      <h3 style="color: yellow;">¿Propongo ideas novedosas, desafío las cosas, momentos quietos y rutinario</h3>
+      <p>Sí, tiendo a proponer ideas novedosas y desafiar las situaciones y rutinas establecidas. Me gusta buscar nuevas formas de abordar los problemas y encontrar soluciones creativas. No me conformo fácilmente con la rutina y busco activamente momentos de cambio y desafío.</p>
+
+      <h3 style="color: yellow;">¿influyo sobre mi entorno con propuestas e ideas novedosas, coherentes, contextualizadas?</h3>
+      <p>Sí, influyo en mi entorno con propuestas e ideas novedosas, coherentes y contextualizadas. Me esfuerzo por presentar mis ideas de manera clara y fundamentada, adaptándolas al contexto específico en el que me encuentro. Busco ofrecer soluciones prácticas y viables que puedan tener un impacto positivo en mi entorno.</p>
+
+      <h3 style="color: yellow;">¿Genero cambio con sentido o estabilidad confortable?</h3>
+      <p>Me gusta hacer cambios que tengan un propósito significativo y que beneficien a quienes me rodean. Aunque valoro la estabilidad, también me motiva buscar nuevas oportunidades para crecer y mejorar. Prefiero seguir un camino que tenga un sentido claro y que me permita contribuir de manera positiva al mundo.</p>
+
+
+
+
+
+
+
+
+    </div>
+    <div class="day" id="day8">
+      <h3 style="color: yellow;">¿Acorde a mi forma de pensar, que calidad de emociones y sentimientos género? ¿he sido responsable frente a esto?</h3>
+      <p>Basándome en mi forma de pensar, tiendo a generar emociones y sentimientos variados. A veces, esto incluye emociones positivas como la alegría, la determinación y la empatía, pero también puedo experimentar emociones más difíciles, como la frustración o la ansiedad. Reconozco que la responsabilidad frente a mis emociones es importante para mi bienestar emocional y el de los demás. Trato de ser consciente de mis emociones y de cómo afectan mi comportamiento y mis relaciones. Siempre intento manejar mis emociones de manera saludable y constructiva, buscando soluciones positivas y evitando reacciones impulsivas o dañinas.</p>
+
+      <h3 style="color: yellow;">¿Establezco contacto con mi mundo interior?</h3>
+      <p>Sí, establezco contacto con mi mundo interior de diferentes maneras. A veces, dedico tiempo a la reflexión y la introspección, tratando de entender mis pensamientos, emociones y deseos más profundos. También puedo expresar mis sentimientos a través de la escritura, el arte o la música, lo que me ayuda a conectar con mi mundo interior de una manera creativa y significativa.</p>
+
+      <h3 style="color: yellow;">¿Vivo en armonía o desarmonía con mi mundo emocional?</h3>
+      <p>Vivo en armonía con mi mundo emocional en la medida en que reconozco y acepto mis emociones, permitiéndome experimentarlas plenamente sin juzgarlas. Aprendo a manejar mis emociones de manera saludable, expresándolas de manera constructiva y buscando resolver conflictos internos de manera pacífica. Sin embargo, también puedo experimentar momentos de desarmonía emocional cuando me enfrento a desafíos o situaciones difíciles que me superan. En esos momentos, procuro buscar apoyo y herramientas para recuperar el equilibrio emocional y volver a vivir en armonía conmigo mismo.</p>
+
+      <h3 style="color: yellow;">¿Qué me habita: amor, miedo, alegría, tristeza, enojo, optimismo, resentimiento…?</h3>
+      <p>Lo que principalmente me habita son la alegría y el amor, especialmente por mi familia. Estos sentimientos positivos son una parte fundamental de mi vida y me brindan felicidad y satisfacción en mi día a día. Aunque también puedo experimentar otras emociones como el miedo, la tristeza o el enojo en ciertos momentos, son la alegría y el amor los que predominan y guían mis acciones y decisiones en mi vida.</p>
+
+    </div>
+    <div class="day" id="day9">
+      <h3 style="color: yellow;">¿Me genero tensión, estrés y me responsabilizo de ello?</h3>
+      <p>A veces sí me genero tensión y estrés, especialmente cuando enfrento situaciones difíciles o tengo muchas responsabilidades. Reconozco que estas emociones pueden ser producto de mi forma de pensar y actuar, por lo que asumo la responsabilidad de gestionarlas de manera adecuada. Trato de identificar las causas de mi tensión y estrés, y busco formas saludables de manejarlos, como practicar la relajación, el ejercicio físico o buscar apoyo en personas de confianza.</p>
+
+      <h3 style="color: yellow;">¿Soy oportuno en asumir decisiones, acciones o dejo todo para lo último?</h3>
+      <p>Generalmente dejo todo para lo último. A menudo postergo la toma de decisiones y la realización de acciones, lo que puede generar estrés y ansiedad innecesarios. Reconozco que esta tendencia puede afectar mi eficacia y bienestar, por lo que estoy trabajando en mejorar mi habilidad para ser más oportuno y proactivo en la toma de decisiones y la ejecución de tareas.</p>
+
+      <h3 style="color: yellow;">¿identifico oportunamente las fuentes de estrés y actuó en consonancia?</h3>
+      <p>No suelo identificar oportunamente las fuentes de estrés, lo que puede llevar a que no actúe de manera adecuada para gestionarlo. Es importante que trabaje en mejorar mi capacidad para reconocer las situaciones o factores que me generan estrés, para así poder tomar medidas para manejarlo de manera efectiva.</p>
+
+      <h3 style="color: yellow;">¿Aprendo de mis errores o repito los comportamientos sin establecer planes de mejoramiento? ¿Tomo consciencia de ello?</h3>
+      <p>Suelo repetir comportamientos sin establecer planes de mejora, pero sí soy consciente de ello. Aunque reconozco mis errores, a veces me cuesta aprender de ellos y cambiar mis acciones. Es importante que trabaje en desarrollar estrategias para aprender de mis errores y establecer planes de mejora concretos para evitar repetir los mismos patrones de comportamiento.</p>
+
+    </div>
+    <div class="day" id="day10">
+      <h3 style="color: yellow;">¿Defiendes tu derecho a la libertad sexual?</h3>
+      <p>Sí, defiendo mi derecho a la libertad sexual. Creo firmemente en la autonomía y el respeto por las decisiones personales en materia de sexualidad. Es importante para mí que cada individuo tenga la libertad de explorar y expresar su sexualidad de manera consensuada y sin discriminación.</p>
+
+      <h3 style="color: yellow;">¿Defiendes tu derecho a la privacidad sexual?</h3>
+      <p>Sí, considero que la privacidad sexual es un derecho fundamental. Cada persona tiene el derecho de mantener su vida sexual en privado y de decidir cuánta información compartir sobre su intimidad. Es importante respetar la privacidad de cada individuo en asuntos relacionados con su vida sexual y no divulgar información sin su consentimiento.</p>
+
+      <h3 style="color: yellow;">¿Has asumido tu derecho a la educación sexual?</h3>
+      <p>Sí, considero que el derecho a la educación sexual es fundamental para vivir de manera saludable y consciente en términos de sexualidad. He asumido este derecho al buscar información y educarme sobre temas relacionados con la sexualidad, tanto a través de la educación formal como de recursos disponibles en línea y conversaciones con profesionales de la salud.</p>
+
+      <h3 style="color: yellow;">¿Respetas a los demás o los juzgas, sin conocerlos y comprender quiénes son?</h3>
+      <p>Reconozco que a veces tiendo a juzgar a los demás sin conocerlos realmente. Esto puede deberse a prejuicios o a una falta de comprensión sobre quiénes son realmente. Es algo en lo que estoy trabajando para mejorar y practicar más la empatía y el entendimiento antes de emitir juicios.</p>
+
+      <h3 style="color: yellow;">¿Aceptas que comentes errores y aprendes de ellos, o niegas u ocultas tus errores?</h3>
+      <p>Es importante aceptar y reconocer los errores como parte natural del aprendizaje y del crecimiento personal. Estoy abierto a admitir mis errores y aprender de ellos para mejorar en el futuro.</p>
+
+      <h3 style="color: yellow;">¿Te caracterizas por el respeto a los otros?</h3>
+      <p>Intento respetar a los demás, aunque a veces me cuesta mantener una actitud siempre respetuosa. Es algo en lo que estoy trabajando para mejorar.</p>
+
+      <h3 style="color: yellow;">¿Actúas de acuerdo con tus intereses, defiendes tus opiniones sin sentirte culpable?</h3>
+      <p>Sí, generalmente actúo de acuerdo con mis intereses y defiendo mis opiniones sin sentirme culpable.</p>
+
+      <h3 style="color: yellow;">¿Algunas veces consideras que las personas se aprovechan de ti?</h3>
+      <p>Reconozco que a veces siento que las personas se aprovechan de mí y eso me genera resentimiento hacia ellos.</p>
+
+      <h3 style="color: yellow;">¿Tienes dificultad para expresar tus ideas?</h3>
+      <p>Sí, a veces me cuesta expresar mis ideas porque mi forma de pensar puede ser compleja o abstracta, lo que dificulta encontrar las palabras adecuadas para comunicar mis pensamientos de manera clara y precisa. Esto puede generar frustración, especialmente cuando quiero transmitir algo importante o complejo.</p>
+
+      <h3 style="color: yellow;">¿Te valoras? ¿Has aprendido a valorarte?</h3>
+      <p>Sí, me valoro y he aprendido a hacerlo. Reconozco mis fortalezas, logros y cualidades positivas, lo cual me permite tener una autoestima saludable. Sin embargo, también soy consciente de mis áreas de mejora y acepto mis limitaciones, lo que me ayuda a crecer y desarrollarme como persona.</p>
+
+      <h3 style="color: yellow;">¿Eres un ser que construye limites, normas que te protegen?</h3>
+      <p>Sí, soy un ser que establece límites y normas para protegerme a mí mismo y a los demás. Establecer límites saludables es importante para mantener relaciones equilibradas y proteger mi bienestar emocional y físico.</p>
+
+      <h3 style="color: yellow;">¿Te sientes y te piensas orgulloso de ti mismo?</h3>
+      <p>Sí, me siento orgulloso de mí mismo por mis logros y por el camino que he recorrido. Reconozco mis esfuerzos y valoro mis habilidades y capacidades. Aunque también reconozco áreas en las que puedo mejorar, me siento satisfecho con lo que he logrado hasta ahora y estoy comprometido a seguir creciendo y alcanzando mis metas.</p>
+
+      <h3 style="color: yellow;">¿Te comunicas te integras fácilmente con los demás?</h3>
+      <p>No, no me comunico ni me integro fácilmente con los demás. A menudo me resulta difícil abrirme y conectarme con nuevas personas.</p>
+
+    </div>
+  </div>
+  <!------------------------------ Footer ------------------------------>
+  <footer>
+    <div class="container">
+      <div class="footer-info">
+        <p>&copy; 2024 Mi Página Web | Todos los derechos reservados</p>
+      </div>
+    </div>
+  </footer>
+  <!-- Funciones JavaScript para el funcionamiento del sitio web -->
+  <script>
+    function showDay(dayNumber) {
+      // Oculta todos los días
+      var days = document.querySelectorAll('.day');
+      days.forEach(function(day) {
+        day.classList.remove('active');
+      });
+  
+      // Muestra el día seleccionado
+      var selectedDay = document.getElementById('day' + dayNumber);
+      selectedDay.classList.add('active');
+    }
+    
+    var audioPlayer = document.getElementById("audioPlayer");
+    var playButton = document.querySelector(".play-button");
+
+    function toggleAudio() {
+      if (audioPlayer.paused) {
+        audioPlayer.play();
+        playButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M14 12l-10-6v12l10-6zm6-6h-12v12h12v-12z"/></svg>';
+      } else {
+        audioPlayer.pause();
+        playButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3 22v-20l18 10-18 10z"/></svg>';
+      }
+    }
+    function goToMain() {
+      var days = document.querySelectorAll('.day.active');
+      
+      days.forEach(function(day) {
+        day.style.transition = 'opacity 0.5s ease'; // Añadir transición
+        day.style.opacity = 0; // Desvanecer el día activo
+        
+        // Al finalizar la animación, remover la clase "active"
+        setTimeout(function() {
+          day.classList.remove('active');
+          day.style.opacity = 1; // Restaurar opacidad por si se muestra de nuevo
+        }, 500); // 500 milisegundos = 0.5 segundos
+      });
+    }
+    function toggleDarkMode() {
+      var body = document.body;
+      body.classList.toggle('dark-mode');
+    }
+  </script>
+</body>
+</html>
